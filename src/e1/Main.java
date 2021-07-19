@@ -2,98 +2,74 @@ package e1;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
-class Main {
+public class Main {
 	public static void main(String[] args) {
-		// exam1();
-		// exam2();
-		// exam3();
-		exam4();
-	}
+		System.out.println("== 프로그램 시작 ==");
 
-	static void exam4() {
-		System.out.println("== 예제 4 ==");
+		Scanner sc = new Scanner(System.in);
+
+		int lastArticleId = 0;
+
 		List<Article> articles = new ArrayList<>();
-		articles.add(new Article()); // 0
-		articles.add(new Article()); // 1
-		articles.add(new Article()); // 2
-		articles.add(new Article()); // 3
-		articles.add(new Article()); // 4
 
-		for (int i = 0; i < articles.size(); i++) {
-			Article article = articles.get(i);
-			System.out.println(article.id);
+		while (true) {
+			System.out.printf("명령어) ");
+			String command = sc.nextLine();
+
+			command = command.trim();
+
+			if (command.length() == 0) {
+				continue;
+			}
+
+			if (command.equals("system exit")) {
+				break;
+			}
+			if (command.equals("article write")) {
+				int id = lastArticleId + 1;
+				lastArticleId = id;
+				System.out.printf("제목 : ");
+				String title = sc.nextLine();
+				System.out.printf("내용 : ");
+				String body = sc.nextLine();
+				
+				Article article = new Article(id, title, body);
+				articles.add(article);
+
+				System.out.printf("%d번글이 생성되었습니다.\n", id);
+
+			} else if (command.equals("article list")) {
+				System.out.println("게시물이 없습니다.");
+			}
+				System.out.println("번호 | 제목\n");
+			
+			for (int i=articles.size() - 1; i>=0; i--) {
+				Article article = articles.get(i);
+			
+			System.out.printf("%d    |    %s\n",article.id, article.title);
+			} 
+			
+			else {
+				System.out.printf("%s(은)는 존재하지 않는 명령어 입니다.\n", command);
+			}
 		}
+
+		sc.close();
+
+		System.out.println("== 프로그램 끝 ==");
 	}
-
-	static void exam3() {
-		System.out.println("== 예제 3 ==");
-		ArrayList<Article> articles = new ArrayList<Article>();
-		articles.add(new Article()); // 0
-		articles.add(new Article()); // 1
-		articles.add(new Article()); // 2
-		articles.add(new Article()); // 3
-		articles.add(new Article()); // 4
-
-		for (int i = 0; i < articles.size(); i++) {
-			Article article = articles.get(i);
-			System.out.println(article.id);
-		}
-	}
-
-	static void exam2() {
-		System.out.println("== 예제 2 ==");
-		ArrayList articles = new ArrayList();
-		articles.add(new Article()); // 0
-		articles.add(new Article()); // 1
-		articles.add(new Article()); // 2
-		articles.add(new Article()); // 3
-		articles.add(new Article()); // 4
-
-		for (int i = 0; i < articles.size(); i++) {
-			Article article = (Article) articles.get(i);
-			System.out.println(article.id);
-		}
-	}
-
-	static void exam1() {
-		System.out.println("== 예제 1 ==");
-		int articlesSize = 0;
-		Article[] articles = new Article[1000];
-		articles[0] = new Article();
-		articlesSize++;
-		articles[1] = new Article();
-		articlesSize++;
-		articles[2] = new Article();
-		articlesSize++;
-		articles[3] = new Article();
-		articlesSize++;
-		articles[4] = new Article(); // 5
-
-		for (int i = 0; i < articlesSize; i++) {
-			System.out.println(articles[i].id);
-		}
-	}
-
 }
 
 class Article {
-	static int lastId; // 0
 	int id;
-	String regDate;
-	static {
-		lastId = 0;
-	}
+	String title;
+	String body;
 
-	Article() {
-		this(lastId + 1, "2020-12-12 12:12:12");
-		lastId++;
-	}
-
-	Article(int id, String regDate) {
+	public Article(int id, String title, String body) {
 		this.id = id;
-		this.regDate = regDate;
+		this.title = title;
+		this.body = body;
 	}
 }
-
-
